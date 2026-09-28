@@ -1,0 +1,21 @@
+name: Wired Brain workflow // this will show up on github ui as Wired Brain workflow
+
+on:
+  workflow_dispatch: //Helps us to manually trigger the workflow from the github ui
+  push: 
+    branches: ['main'] //Helps us to trigger the workflow when we push to main branch
+jobs: 
+  build:
+    runs-on: ubuntu-latest // This specifies the operating system on which the job will run  
+    steps:
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - id: build  
+      - name: Build
+        run: dotnet build --no-restore
