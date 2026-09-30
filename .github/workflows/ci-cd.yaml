@@ -53,24 +53,24 @@ jobs:
         with:
           name: dotnet-webapi
           path: app.zip
-    deploy:
-      needs: build
-      runs-on: ubuntu-latest
-      env:
-        AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-      steps:
-        - name: Download Artifact
-          uses: actions/download-artifact@v4
-          with:
-            name: dotnet-webapi
-        - name: Azure Login
-          if: ${{ github.ref == 'refs/heads/main' && env.AZURE_CREDENTIALS != '' }}
-          uses: azure/login@v2
-          with:
-            creds: ${{ env.AZURE_CREDENTIALS }}
-        - name: Deploy to Azure Web App
-          if: ${{ github.ref == 'refs/heads/main' && env.AZURE_CREDENTIALS != '' }}
-          uses: azure/webapps-deploy@v2
-          with:
-            app-name: wiredbrainapi
-            package: app.zip
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dotnet-webapi
+      - name: Azure Login
+        if: ${{ github.ref == 'refs/heads/main' && env.AZURE_CREDENTIALS != '' }}
+        uses: azure/login@v2
+        with:
+          creds: ${{ env.AZURE_CREDENTIALS }}
+      - name: Deploy to Azure Web App
+        if: ${{ github.ref == 'refs/heads/main' && env.AZURE_CREDENTIALS != '' }}
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: wiredbrainapi
+          package: app.zip
